@@ -21,6 +21,7 @@ public class ChatDAO {
 		String nick = "";
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		nick = ss.selectOne("com.store.meonggae.chat.selectOneMyNick", memNum);
+		mbDAO.closeHandler(ss);
 		return nick;
 	} // selectOneMyNick
 	
@@ -30,6 +31,8 @@ public class ChatDAO {
 		
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		list = ss.selectList("com.store.meonggae.chat.selectListChatRoom", memNum);
+		
+		mbDAO.closeHandler(ss);
 		
 		return list;
 	} // selectListChatRoom
@@ -41,6 +44,8 @@ public class ChatDAO {
 		SqlSession ss = mbDAO.getMyBatisHandler(false);
 		list = ss.selectList("com.store.meonggae.chat.selectListChat", chatRoomParticipantVO);
 		
+		mbDAO.closeHandler(ss);
+		
 		return list;
 	} // selectListChat
 	
@@ -49,6 +54,9 @@ public class ChatDAO {
 		int cnt = 0;
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		cnt = ss.insert("com.store.meonggae.chat.insertChat", chatSendVO);
+		
+		mbDAO.closeHandler(ss);
+		
 		return cnt;
 	} // insertChat
 	
@@ -57,6 +65,9 @@ public class ChatDAO {
 		int cnt = 0;
 		SqlSession ss = mbDAO.getMyBatisHandler(true);
 		cnt = ss.update("com.store.meonggae.chat.updateChatRead", chatRoomParticipantVO);
+		
+		mbDAO.closeHandler(ss);
+		
 		return cnt;
 	} // updateChatRead
 } // class
