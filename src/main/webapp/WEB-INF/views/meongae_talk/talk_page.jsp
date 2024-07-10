@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<title>멍게장터</title>
-	<link rel="icon" href="http://localhost/meonggae_prj/common/tamcatIcon.ico" />
+	<link rel="icon" href="/tamcatIcon.ico" />
 	<!-- jQuery CDN -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
@@ -20,12 +20,12 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Raleway:400,300,500,700,600' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" type="text/css">
 	<!-- Theme Stylesheet -->
-	<script src="http://localhost/meonggae_prj/common/JS/script.js"></script>
-	<script src="http://localhost/meonggae_prj/common/JS/eventJS.js"></script>
-	<link rel="stylesheet" href="http://localhost/meonggae_prj/common/CSS/style.css">
-	<link rel="stylesheet" href="http://localhost/meonggae_prj/common/CSS/event_style.css">
-	<link rel="stylesheet" href="http://localhost/meonggae_prj/common/CSS/responsive.css">
-	<link rel="stylesheet" href="http://localhost/meonggae_prj/common/CSS/meongae_talk.css">
+	<script src="/js/script.js"></script>
+<!-- 	<script src="http://localhost/meonggae_prj/common/JS/eventJS.js"></script> -->
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/event_style.css">
+	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="stylesheet" href="/css/meongae_talk.css">
 <!-- 	<script src ="/js/chat.js"></script> -->
 	<!-- sock js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
