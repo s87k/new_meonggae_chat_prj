@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.store.meonggae.chat">
+	<resultMap type="com.store.meonggae.meonggaeTalk.domain.ChatRoomDomain" id="chatRoomDomResult">
+		<result column="MEM_NUM_OPPONENT" property="memNumOpponent"/>
+		<result column="NICK_OPPONENT" property="nickOpponent"/>
+		<result column="IMG_OPPONENT" property="imgOpponent"/>
+		<result column="GOODS_NUM" property="goodsNum"/>
+		<result column="CONTENT" property="content"/>
+		<result column="INPUT_DATE" property="inputDate"/>
+		<result column="READ_FLAG" property="readFlag"/>
+	</resultMap>
+	<resultMap type="com.store.meonggae.meonggaeTalk.domain.ChatDomain" id="chatDomResult">
+		<result column="MEM_NUM_OPPONENT" property="memNumOpponent"/>
+		<result column="NICK_OPPONENT" property="nickOpponent"/>
+		<result column="IMG_OPPONENT" property="imgOpponent"/>
+		<result column="MEM_NUM_SEND" property="memNumSend"/>
+		<result column="MEM_NUM_RECV" property="memNumRecv"/>
+		<result column="CONTENT" property="content"/>
+		<result column="GOODS_NUM" property="goodsNum"/>
+		<result column="INPUT_DATE" property="inputDate"/>
+		<result column="STR_DATE" property="strDate"/>
+	</resultMap>
+	
+	<!-- 나의 닉네임 조회 -->
+	<select id="selectOneMyNick" resultType="String" parameterType="int">
+		select	nick
+		from	member
+		where	mem_num = #{memNum}
+	</select>
+
+	<!-- 채팅방 목록 조회 -->
+	<select id="selectListChatRoom" resultMap="chatRoomDomResult" parameterType="int" >
+		select	MEM_NUM_OPPONENT,m.nick nick_opponent, m.img img_opponent,GOODS_NUM,CONTENT,INPUT_DATE,READ_FLAG
+		from	(
+				select	row_number() over(partition by mem_num_opponent order by input_date desc) rnum,
+						CHAT_KEY,GOODS_NUM,CONTENT,INPUT_DATE,MEM_NUM_SEND,MEM_NUM_RECV,MEM_NUM_OPPONENT,READ_FLAG
+				from	(
+						select	CHAT_KEY, GOODS_NUM, CONTENT, INPUT_DATE, MEM_NUM_SEND, MEM_NUM_RECV,
+								case
+									when MEM_NUM_SEND = #{memNum} then MEM_NUM_RECV
+									else MEM_NUM_SEND
+								end mem_num_opponent,
+								READ_FLAG
+						from	chat
+						where	MEM_NUM_SEND = #{memNum} or MEM_NUM_RECV = #{memNum}
+						)
+				) c, member m
+		where	c.MEM_NUM_OPPONENT = m.mem_num and
+				rnum = 1
+	</select>
+
+	<!-- 채팅방의 채팅 목록 조회 -->
+	<select id="selectListChat" resultMap="chatDomResult" parameterType="com.store.meonggae.meonggaeTalk.vo.ChatRoomParticipantVO" >
+		select	c.mem_num_opponent, m.nick nick_opponent, m.img img_opponent,
+				c.mem_num_send, c.mem_num_recv, CONTENT,
+				c.goods_num, INPUT_DATE, to_char(input_date, 'fmhh24:mi | mm-dd') str_Date
+		from	(
+				select	CHAT_KEY, GOODS_NUM, CONTENT, INPUT_DATE, MEM_NUM_SEND, MEM_NUM_RECV,
+						case
+							when MEM_NUM_SEND = #{memNum} then MEM_NUM_RECV
+							else MEM_NUM_SEND
+						end mem_num_opponent,
+						READ_FLAG
+				from	chat
+				) c, member m
+		where	c.mem_num_opponent = m.mem_num and
+				(c.MEM_NUM_SEND = #{memNum} or c.MEM_NUM_RECV = #{memNum}) and
+				(c.MEM_NUM_SEND = #{memNumOpponent} or c.MEM_NUM_RECV = #{memNumOpponent})
+		order by input_date
+	</select>
+	
+	<!-- 채팅 보내기 -->
+	<insert id="insertChat" parameterType="com.store.meonggae.meonggaeTalk.vo.ChatSendVO">
+		insert into chat(CHAT_KEY,GOODS_NUM,CONTENT,INPUT_DATE,MEM_NUM_SEND,MEM_NUM_RECV,READ_FLAG)
+		values	(
+				#{memNumSend} || '㏇' || to_char(sysdate, 'yyyymmdd') || chat_seq.nextval || '㏇' || #{memNumRecv},
+				#{goodsNum}, #{content}, sysdate, #{memNumSend}, #{memNumRecv}, 
+				<choose>
+					<when test="readFlag eq null or readFlag eq ''">
+					'N'
+					</when>
+					<otherwise>
+					#{readFlag}
+					</otherwise>
+				</choose>
+				)
+	</insert>
+	
+	<!-- 채팅방 입장시 메시지 읽음으로 처리 -->
+	<update id="updateChatRead" parameterType="com.store.meonggae.meonggaeTalk.vo.ChatRoomParticipantVO">
+		update	chat
+		set		READ_FLAG = 'Y'
+		where	MEM_NUM_RECV = #{memNum} and  MEM_NUM_SEND = #{memNumOpponent} and read_flag = 'N'
+	</update>
+</mapper>
