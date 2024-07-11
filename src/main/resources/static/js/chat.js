@@ -157,7 +157,7 @@ $(function (){
 		} else if (img.startsWith('http')) {
 			imgSrc = img;
 		} else {
-			imgSrc = 'http://211.63.89.140/meonggae_prj/profile-img/' + img;
+			imgSrc = 'http://localhost/meonggae_prj/profile-img/' + img;
 		}
 		return imgSrc
 	} // getUserImg
