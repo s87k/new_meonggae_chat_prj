@@ -15,10 +15,15 @@ $(function (){
 	//stomp.debug = null; // stomp 콘솔출력 X
 
 	// 구독을 취소하기위해 구독 시 아이디 저장
-	const subscribe = [];
+	var subscribe = null;
 	
 	// 채팅방 선택시 채팅 내역 불러오기
 	$(".memNick").click(function() {
+		if(subscribe != null) {
+			// 기존 구독 취소
+			subscribeCancle();
+		}
+		
 		$("#mesgs").css("background-color", "#ffffff");
 		$("#write_msg").prop("placeholder", "채팅을 입력해주세요");
 		$("#write_msg").prop("readonly", "");
@@ -34,9 +39,6 @@ $(function (){
 		$("#imgOpponent").val(imgOpponent);
 		
 		callAjaxChatList(memNum, memNumOpponent);
-
-		// 기존 구독 취소
-		subscribeCancle();
 
 		// 연결 시작
 		stompConnect();
@@ -56,6 +58,7 @@ $(function (){
 	
 	// 널 체크하여 메시지 전송
 	function chkNull(){
+		
 		// 채팅방 미선택시 보내지 않음
 		if($("#memNumOpponent").val() == null || $("#memNumOpponent").val() == '') {
 			return;
@@ -207,11 +210,12 @@ $(function (){
 	
 	// 모든 구독 취소하기
 	function subscribeCancle() {
-		const length = subscribe.length;
-		for(let i=0;i<length;i++) {
-			const sid = subscribe.pop();
-			stomp.unsubscribe(sid.id);
-		}
+		subscribe.unsubscribe();
+//		const length = subscribe.length;
+//		for(let i=0;i<length;i++) {
+//			const sid = subscribe.pop();
+//			stomp.unsubscribe(sid.id);
+//		}
 	}
 	
 	// 웹소켓 연결
@@ -251,7 +255,8 @@ $(function (){
 				} // end if
 				updateChatPreview(content);
 			}); // subscribe
-			subscribe.push(subscribeId);
+			//subscribe.push(subscribeId);
+			subscribe = subscribeId;
 		
 		}); // connection
 	} // stompConnect

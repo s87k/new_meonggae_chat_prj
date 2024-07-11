@@ -33,20 +33,19 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>    
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <script type="text/javascript">
 
+	$(function() {
+		//const surscribe = [];
+		
+	}); // ready
+	
     let scriptURL = "/js/chat.js?v="+Math.random();
     let scriptElement = document.createElement("script");
     scriptElement.src = scriptURL;
     document.head.appendChild(scriptElement);
 
-</script>
-<script type="text/javascript">
-	$(function() {
-		
-		
-	}); // ready
-	
 </script>
 <body>
 <!-- header 시작 -->
