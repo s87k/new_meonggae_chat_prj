@@ -19,6 +19,10 @@ $(function (){
 	
 	// 채팅방 선택시 채팅 내역 불러오기
 	$(".memNick").click(function() {
+		$("#mesgs").css("background-color", "#ffffff");
+		$("#write_msg").prop("placeholder", "채팅을 입력해주세요");
+		$("#write_msg").prop("readonly", "");
+
 		$(".chat_list").removeClass("active_chat");
 		$($(".chat_list")[$(".memNick").index(this)]).addClass("active_chat");
 		
@@ -52,7 +56,11 @@ $(function (){
 	
 	// 널 체크하여 메시지 전송
 	function chkNull(){
-		
+		// 채팅방 미선택시 보내지 않음
+		if($("#memNumOpponent").val() == null || $("#memNumOpponent").val() == '') {
+			return;
+		} // end if
+
 		let content = $("#write_msg").val().trim()
 		if(content != "") {
 			callAjaxChatAdd(content);

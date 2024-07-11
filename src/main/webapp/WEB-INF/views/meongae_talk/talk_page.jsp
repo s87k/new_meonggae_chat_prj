@@ -107,13 +107,13 @@
 				</c:choose>
 			</div>
 		</div>
-		<div class="mesgs">
+		<div id="mesgs" class="mesgs" style="background-color: #F8F8F8;">
 			<div class="msg_history" id="msg_history">
 				<!-- 채팅 메시지가 들어오는 곳 -->
 			</div>
-			<div class="type_msg">
-				<div class="input_msg_write">
-					<input type="text" id="write_msg" class="write_msg" placeholder="Type a message" />
+			<div id="type_msg" class="type_msg">
+				<div id="input_msg_write" class="input_msg_write">
+					<input type="text" id="write_msg" class="write_msg" placeholder="채팅방을 선택해주세요!" readonly='readonly'/>
 					<button id="msg_send_btn" class="msg_send_btn" type="button">
 						<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 					</button>
