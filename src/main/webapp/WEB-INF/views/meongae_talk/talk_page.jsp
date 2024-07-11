@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" type="text/css">
 	<!-- Theme Stylesheet -->
 	<script src="/js/script.js"></script>
-<!-- 	<script src="http://localhost/meonggae_prj/common/JS/eventJS.js"></script> -->
+<!-- 	<script src="${pageContext.request.contextPath}/common/JS/eventJS.js"></script> -->
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/event_style.css">
 	<link rel="stylesheet" href="/css/responsive.css">
@@ -37,7 +37,6 @@
 <script type="text/javascript">
 
 	$(function() {
-		//const surscribe = [];
 		
 	}); // ready
 	
@@ -57,6 +56,7 @@
 	<input type="hidden" id="memNumOpponent" value=""/>
 	<input type="hidden" id="imgOpponent" value=""/>
 	<input type="hidden" id="goodsNum" value="${requestScope.goodsNum }"/>
+	<input type="hidden" id="serverName" value="${pageContext.request.serverName}"/>
 	<div class="messaging">
 		<div class="inbox_msg">
 			<div class="inbox_people">

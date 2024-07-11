@@ -17,6 +17,8 @@ $(function (){
 	// 구독을 취소하기위해 구독 시 아이디 저장
 	var subscribe = null;
 	
+	const serverName = $("#serverName").val() != null ? $("#serverName").val() : '';
+	
 	// 채팅방 선택시 채팅 내역 불러오기
 	$(".memNick").click(function() {
 		if(subscribe != null) {
@@ -84,7 +86,7 @@ $(function (){
 				memNumOpponent:memNumOpponent
 		}
 		$.ajax({
-			url: "http://localhost:8080/chat_list",
+			url: "http://" + serverName + ":8080/chat_list",
 			type: "GET",
 			data: param,
 			dataType: "JSON",
@@ -109,7 +111,7 @@ $(function (){
 				goodsNum: $("#goodsNum").val()
 		}
 		$.ajax({
-			url: "http://localhost:8080/chat_add",
+			url: "http://" + serverName + ":8080/chat_add",
 			type: "POST",
 			data: param,
 			dataType: "JSON",
@@ -176,7 +178,7 @@ $(function (){
 					output += '<div class="outgoing_msg"><div class="sent_msg"><p>' + jsonObj.content + '</p><span class="time_date">' + jsonObj.strDate + '</span></div></div>';						
 				} else {
 					imgSrc = getUserImg(jsonObj.imgOpponent);
-					output += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="' + imgSrc + '" alt="sunil"></div><div class="received_msg"><div class="received_withd_msg"><p>' + jsonObj.content + '</p><span class="time_date">' + jsonObj.strDate + '</span></div></div></div>'
+					output += '<div class="incoming_msg"><div class="incoming_msg_img"><img src="' + imgSrc + '" alt="prof"></div><div class="received_msg"><div class="received_withd_msg"><p>' + jsonObj.content + '</p><span class="time_date">' + jsonObj.strDate + '</span></div></div></div>'
 				} // end else
 			} // end for
 			msgHistory.html(output);
@@ -249,7 +251,7 @@ $(function (){
 				
 				if ((memNumSend != memNum) && (chat.headers.destination == "/topic/message/" + getRoomnumber())) {
 					imgSrc = getUserImg($("#imgOpponent").val());
-					output = '<div class="incoming_msg"><div class="incoming_msg_img"><img src="' + imgSrc + '" alt="sunil"></div><div class="received_msg"><div class="received_withd_msg"><p>' + content + '</p><span class="time_date">' + getFormatDate() + '</span></div></div></div>';
+					output = '<div class="incoming_msg"><div class="incoming_msg_img"><img src="' + imgSrc + '" alt="prof"></div><div class="received_msg"><div class="received_withd_msg"><p>' + content + '</p><span class="time_date">' + getFormatDate() + '</span></div></div></div>';
 					msgHistory.append(output);
 					scrollToBottom();
 				} // end if
