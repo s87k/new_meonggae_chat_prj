@@ -77,7 +77,25 @@
 		insert into chat(CHAT_KEY,GOODS_NUM,CONTENT,INPUT_DATE,MEM_NUM_SEND,MEM_NUM_RECV,READ_FLAG)
 		values	(
 				#{memNumSend} || '㏇' || to_char(sysdate, 'yyyymmdd') || chat_seq.nextval || '㏇' || #{memNumRecv},
-				#{goodsNum}, #{content}, sysdate, #{memNumSend}, #{memNumRecv}, 
+				<choose>
+					<when test="goodsNum eq null or goodsNum eq ''">
+						(
+						select 	goods_num
+						from	(
+								select	row_number() over(order by Input_date desc) rnum,
+										LAST_VALUE(goods_num IGNORE NULLS) OVER (ORDER BY Input_date) AS goods_num
+								from 	chat
+								where 	(mem_num_send = #{memNumSend} or mem_num_recv = #{memNumSend}) and (MEM_NUM_SEND  = #{memNumRecv} or MEM_NUM_RECV = #{memNumRecv})
+								)
+						where	rnum = 1
+						)					
+					</when>
+					<otherwise>
+						#{goodsNum}
+					</otherwise>
+				</choose>
+				, 				 
+				#{content}, sysdate, #{memNumSend}, #{memNumRecv}, 
 				<choose>
 					<when test="readFlag eq null or readFlag eq ''">
 					'N'
