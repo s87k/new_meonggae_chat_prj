@@ -53,13 +53,13 @@ jQuery(document).ready(function($) {
 
 	//이벤트 버튼
 	$(".event-btn").click(function(){
-		location.href="http://localhost/meonggae_prj/event_page/event_main.do";
+		location.href="http://stu8.sist.co.kr/meonggae_prj/event_page/event_main.do";
 	});
 	
 	//로그인 버튼
 	$(".login-btn").click(function() {
         $.ajax({
-            url: 'http://localhost/meonggae_prj/login_page/login_page.do',
+            url: 'http://stu8.sist.co.kr/meonggae_prj/login_page/login_page.do',
             type: 'GET',
             success: function(data) {
                 $('#popupModal .modal-body').html(data);
@@ -87,7 +87,7 @@ function enterkey(event){
 //키워드로 검색하기
 function searchPrd(){
 	var keyword = $("#searchKey").val().trim();
-	location.href = 'http://localhost/meonggae_prj/main_page/search_contents.do?kw=' + keyword;
+	location.href = 'http://stu8.sist.co.kr/meonggae_prj/main_page/search_contents.do?kw=' + keyword;
 }//searchPrd
 
 
@@ -95,7 +95,7 @@ function searchPrd(){
 function loadCategories(){
 $.ajax({
 	type: 'GET',
-	url: 'http://localhost/meonggae_prj/parentCategory.do',
+	url: 'http://stu8.sist.co.kr/meonggae_prj/parentCategory.do',
 	dataType:"json",
 	success: function(response){
 		updateCategoryList(response);
@@ -114,7 +114,7 @@ function updateCategoryList(categories){
 	//json parsing
 	$.each(categories, function(index, item){
 		var $li = $("<li>");
-		var $a = $("<a>").attr("href", 'http://localhost/meonggae_prj/isParentCategory.do?cn=' + item.categoryNum)
+		var $a = $("<a>").attr("href", 'http://stu8.sist.co.kr/meonggae_prj/isParentCategory.do?cn=' + item.categoryNum)
 						.addClass("parent-category")
 						.attr("data-parentid", item.categoryNum)
 						.text(item.name);
@@ -126,7 +126,7 @@ function updateCategoryList(categories){
 //서브 카테고리 로드
 function loadSubCategories(parentCategory){
 $.ajax({
-	url:'http://localhost/meonggae_prj/subCategory.do', 
+	url:'http://stu8.sist.co.kr/meonggae_prj/subCategory.do', 
 	type:'GET',
 	dataType:'json',
 	data:{ Category:parentCategory },
@@ -147,7 +147,7 @@ function updateSubCategoryList(categories){
 	//json parsing
 	$.each(categories, function(index, item){
 		var $li = $("<li>");
-		var $a = $("<a>").attr("href", 'http://localhost/meonggae_prj/isParentCategory.do?cn=' + item.categoryNum)
+		var $a = $("<a>").attr("href", 'http://stu8.sist.co.kr/meonggae_prj/isParentCategory.do?cn=' + item.categoryNum)
 						.addClass("sub-category")
 						.attr("data-value", item.categoryNum)
 						.text(item.name);
