@@ -86,7 +86,7 @@ $(function (){
 				memNumOpponent:memNumOpponent
 		}
 		$.ajax({
-			url: "http://" + serverName + ":8080/chat_list",
+			url: "http://" + serverName + ":8880/chat_list",
 			type: "GET",
 			data: param,
 			dataType: "JSON",
@@ -111,7 +111,7 @@ $(function (){
 				goodsNum: $("#goodsNum").val()
 		}
 		$.ajax({
-			url: "http://" + serverName + ":8080/chat_add",
+			url: "http://" + serverName + ":8880/chat_add",
 			type: "POST",
 			data: param,
 			dataType: "JSON",
@@ -157,7 +157,7 @@ $(function (){
 		} else if (img.startsWith('http')) {
 			imgSrc = img;
 		} else {
-			imgSrc = 'http://211.63.89.136//meonggae_prj/profile-img/' + img;
+			imgSrc = 'http://localhost//meonggae_prj/profile-img/' + img;
 		}
 		return imgSrc
 	} // getUserImg

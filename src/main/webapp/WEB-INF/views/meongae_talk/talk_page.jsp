@@ -88,7 +88,7 @@
 												<img src="${chatRoomDomain.imgOpponent}" alt="" class="thumbnail" style="max-width:40px; max-height:40px;">
 											</c:when>
 											<c:otherwise>
-												<img src="http://211.63.89.136/meonggae_prj/profile-img/${chatRoomDomain.imgOpponent}" alt="" class="thumbnail">
+												<img src="http://localhost/meonggae_prj/profile-img/${chatRoomDomain.imgOpponent}" alt="" class="thumbnail">
 											</c:otherwise>
 										</c:choose>
 									</div>
